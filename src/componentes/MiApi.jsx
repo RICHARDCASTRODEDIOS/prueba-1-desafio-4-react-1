@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
 function MiApi() {
 
-    const [modeloDeAuto, setModeloDeAuto] = useState(''); 
+    const [marcaDeAuto, setMarcaDeAuto] = useState(''); 
 
     const [autos, setAutos] = useState([]);
 
-    // 2. LLamamos al función que consume la API al momento de montar el componente
+    // 2. LLamamos la función que consume la API al momento de montar el componente
     useEffect(() => {
       consultarInformacion();
     }, []);
   
     //Filtro por Modelo de vehiculo
-    const autosFiltrados = autos.filter(e => e.name.toLowerCase().startsWith(modeloDeAuto.toLowerCase()));
-
+    const autosFiltrados = autos.filter(e => e.name.toLowerCase().startsWith(marcaDeAuto.toLowerCase()));
+    
+// Funcion que consume datos de la api
 const consultarInformacion = async () => {
     const url = 'https://private-anon-f2f8a3e599-carsapi1.apiary-mock.com/manufacturers';
 const response = await fetch(url)
@@ -23,6 +24,9 @@ console.log(data);
 setAutos([...autos,...data]);
 
 }
+
+
+
 return (
  
 <div className="container">
@@ -32,7 +36,7 @@ return (
             <div className="container">
                 <h4 className="text-white">Marcas de autos y caballos de fuerza</h4>
                 <form className="d-flex">
-                <input name="filtro" id="filtro" placeholder="Buscar Marca de Auto" value={modeloDeAuto} onChange={(e) => setModeloDeAuto(e.target.value)} />
+                <input name="filtro" id="filtro" placeholder="Buscar Marca de Auto" value={marcaDeAuto} onChange={(e) => setMarcaDeAuto(e.target.value)} />
 
                 </form>
 
@@ -43,7 +47,7 @@ return (
  {autosFiltrados.map(a => 
 <div className="card" key={a.name}>
   {/* <img>Imagen : {a.img_url}</img> */}
-      <h3>Modelo: <span className="span">{a.name}</span></h3>
+      <h3>Marca: <span className="span">{a.name}</span></h3>
       <p class="card-text">Caballos de fuerza: {a.avg_horsepower}</p>
 </div>
 
